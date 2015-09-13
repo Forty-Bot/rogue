@@ -1,0 +1,8 @@
+#include "fonts.h"
+#include "@FONT_NAME@.h"
+
+const unsigned char* font = @FONT_NAME@;
+
+const unsigned char* get_glyph(const unsigned char c) {
+	return font + ((c < 0x21 || c > 0x7E) ? 0x00 : c - 0x21);
+}

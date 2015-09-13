@@ -3,10 +3,11 @@
 
 #include <stdlib.h>
 
+#include "fonts.h"
 #include "util.h"
 
 #define MAP_WIDTH 48
-#define MAP_HEIGHT 25
+#define MAP_HEIGHT 24
 
 #define TILE_X 8
 #define TILE_Y 8
@@ -23,11 +24,6 @@ typedef struct tile {
 	color_t* pallate;		// Should be have the same length as 2^bitwidth
 	const unsigned char* bits;	// The actual data
 } tile;
-
-// Placeholder floor tile
-const unsigned char tile_floor_bits[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xF7, 0xFF};
-color_t tile_floor_pallate[] = {COLOR_WHITE, COLOR_BLACK};
-tile tile_floor = { 1, tile_floor_pallate, tile_floor_bits};
 
 typedef struct item item;
 struct item {
@@ -58,7 +54,7 @@ typedef struct cell {
 
 int cell_init(cell* c) {
 
-	c->tile 		= NULL;
+	c->tile 	= NULL;
 	c->item_first	= NULL;
 	c->item_last	= NULL;
 	c->mob		= NULL;
@@ -71,6 +67,10 @@ cell* map[MAP_WIDTH][MAP_HEIGHT];
 
 // Initialiaze the game
 int init() {
+	
+	const unsigned char* tile_floor_bits = get_glyph('.');
+	color_t tile_floor_pallate[] = {COLOR_WHITE, COLOR_BLACK};
+	tile tile_floor = { 1, tile_floor_pallate, tile_floor_bits};
 	
 	// Create a blank map
 	int i, j;
@@ -87,6 +87,11 @@ int init() {
 // Draw the map to the screen
 int draw() {
 	
+	// Clear the screen with magenta
+	Bdisp_Fill_VRAM((int) COLOR_MAGENTA, 3);
+	// Set the border to black
+	DrawFrame(COLOR_BLACK);
+	// Draw the map
 	int i, j;
 	for(i = 0; i < MAP_WIDTH; i++) {
 		for(j = 0; j < MAP_HEIGHT; j++) {
@@ -94,7 +99,7 @@ int draw() {
 			CopySpriteNbit(t->bits, i * TILE_X, (j * TILE_Y) + MAP_Y_OFFSET, 8, 8, t->pallate, t->bitwidth);
 		}
 	}
-
+	// Draw the VRAM
 	Bdisp_PutDisp_DD();
 	return 0;
 	
