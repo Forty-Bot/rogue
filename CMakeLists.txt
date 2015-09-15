@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 
-set(LIBFXCG_DIR "${CMAKE_SOURCE_DIR}/../../toolchain/"
+set(LIBFXCG_DIR "${CMAKE_SOURCE_DIR}/../../toolchain/")
 
-	set(CMAKE_TOOLCHAIN_FILE "${LIBFXCG_DIR}/Prizm.cmake")
+set(CMAKE_TOOLCHAIN_FILE "${LIBFXCG_DIR}/Prizm.cmake")
 
 set(PROJECT_NAME rogue)
 project(${PROJECT_NAME})
