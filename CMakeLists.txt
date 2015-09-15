@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 
-SET(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/../../toolchain/Prizm.cmake)
+set(LIBFXCG_DIR "${CMAKE_SOURCE_DIR}/../../toolchain/"
+
+	set(CMAKE_TOOLCHAIN_FILE "${LIBFXCG_DIR}/Prizm.cmake")
 
 set(PROJECT_NAME rogue)
 project(${PROJECT_NAME})
@@ -21,4 +23,4 @@ include_directories(${GENERATED_DIR} "${CMAKE_SOURCE_DIR}/src")
 add_executable(${PROJECT_NAME} ${SRC} ${GENERATED_SRC})
 add_dependencies(${PROJECT_NAME} compile_font)
 
-makeg3a("${CMAKE_BINARY_DIR}/${PROJECT_NAME}" ${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/unselected.bmp" "${CMAKE_SOURCE_DIR}/selected.bmp")
+makeg3a("${CMAKE_BINARY_DIR}/${PROJECT_NAME}" ${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/res/icons/unselected.bmp" "${CMAKE_SOURCE_DIR}/res/icons/selected.bmp")
